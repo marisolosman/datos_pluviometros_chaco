@@ -1,0 +1,24 @@
+{
+"type": "FeatureCollection",
+"crs": { "type": "name", "properties": { "name": 
+"urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "ID": 1, "Paraje": "Tres Horquetas", "Institucio": "EFA", "X": 5639196.568, "Y": 7017338.19 }, "geometry": { "type": "Point", "coordinates": [ -58.598090007476479, -26.965930002333007 ] } },
+{ "type": "Feature", "properties": { "ID": 2, "Paraje": "La Leonesa", "Institucio": "EFA", "X": 5628179.1754843462, "Y": 7009720.799271537 }, "geometry": { "type": "Point", "coordinates": [ -58.708242063068091,  -27.035718782185956 ] } },
+{ "type": "Feature", "properties": { "ID": 3, "Paraje": "La Leonesa", "Institucio": "EFA", "X": 5628148.5711379359, "Y": 7009508.996345819 }, "geometry": { "type": "Point", "coordinates": [ -58.708528553510909, -27.037632632553791 ] } },
+{ "type": "Feature", "properties": { "ID": 4, "Paraje": "Lapachito", "Institucio": "EFA", "X": 5613274.93, "Y": 7016447.137 }, "geometry": { "type": "Point", "coordinates": [ -58.859030670657127, -26.976324096981021 ] } },
+{ "type": "Feature", "properties": { "ID": 5, "Paraje": "El Moncholo", "Institucio": "EFA", "X": 5629988.282000001, "Y": 7007279.997 }, "geometry": { "type": "Point", "coordinates": [ -58.689758387530674, -27.057572570691796 ] } },
+{ "type": "Feature", "properties": { "ID": 6, "Paraje": "Laguna Patos", "Institucio": "EFA", "X": 5614406.096, "Y": 7007610.388 }, "geometry": { "type": "Point", "coordinates": [ -58.846825047330249, -27.055966550500475 ] } },
+{ "type": "Feature", "properties": { "ID": 7, "Paraje": "Las Rosas", "Institucio": "EFA", "X": 5624129.8370000012, "Y": 7020044.827 }, "geometry": { "type": "Point", "coordinates": [ -58.750072354062354, -26.942935310192716 ] } },
+{ "type": "Feature", "properties": { "ID": 8, "Paraje": "Lote 4", "Institucio": "EFA", "X": 5624559.385, "Y": 7007644.9179999987 }, "geometry": { "type": "Point", "coordinates": [ -58.744505809572374, -27.054778972869251 ] } },
+{ "type": "Feature", "properties": { "ID": 9, "Paraje": "Yatay", "Institucio": "EFA", "X": 5619084.694, "Y": 6998635.887 }, "geometry": { "type": "Point", "coordinates": [ -58.798810767052665, -27.136547885456181 ] } },
+{ "type": "Feature", "properties": { "ID": 10, "Paraje": "El Palmar", "Institucio": "EFA", "X": 5625010.203, "Y": 6994598.149 }, "geometry": { "type": "Point", "coordinates": [ -58.738643288256725, -27.172454709568989 ] } },
+{ "type": "Feature", "properties": { "ID": 11, "Paraje": "Gral Vedia", "Institucio": "EFA", "X": 5633071.4758558404, "Y": 7021046.7316039335 }, "geometry": { "type": "Point", "coordinates": [ -58.660160418244224, -26.933069221787218 ] } },
+{ "type": "Feature", "properties": { "ID": 12, "Paraje": "Lote 16", "Institucio": "EFA", "X": 5618697.591, "Y": 7028664.38 }, "geometry": { "type": "Point", "coordinates": [ -58.805581369062594, -26.865633887440378 ] } },
+{ "type": "Feature", "properties": { "ID": 13, "Paraje": "Florodora", "Institucio": "EPGS N?4", "X": 5632185.298, "Y": 7011165.472 }, "geometry": { "type": "Point", "coordinates": [ -58.668031830889277, -27.022307957595739 ] } },
+{ "type": "Feature", "properties": { "ID": 14, "Paraje": "Yatay", "Institucio": "EPGS N?4", "X": 5619084.694, "Y": 6998635.887 }, "geometry": { "type": "Point", "coordinates": [ -58.798810767052665, -27.136547885456181 ] } },
+{ "type": "Feature", "properties": { "ID": 15, "Paraje": "Limitas", "Institucio": "EPGS N?4", "X": 5627510.989, "Y": 6989136.076 }, "geometry": { "type": "Point", "coordinates": [ -58.712849522720006, -27.221506817287718 ] } },
+{ "type": "Feature", "properties": { "ID": 16, "Paraje": "Solalinde", "Institucio": "EPGS N?4", "X": 5631907.5051744161, "Y": 7008197.847436144 }, "geometry": { "type": "Point", "coordinates":[ -58.670515021646779, -27.049109796969578 ] } },
+{ "type": "Feature", "properties": { "ID": 17, "Paraje": "El Moncholo", "Institucio": "Otro", "X": 5629988.282000001, "Y": 7007279.997 }, "geometry": { "type": "Point", "coordinates": [ -58.689758387530674, -27.057572570691796 ] } },
+]
+
