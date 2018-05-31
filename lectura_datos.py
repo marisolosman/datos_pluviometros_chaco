@@ -8,14 +8,22 @@ Requerimientos:
     https://developers.google.com/sheets/api/quickstart/python
     Generar el archivo vacio 'credentials.json'
     directorio con el spreadsheet id para cada estacion
+    carpeta con shapefiles de bermejo y chaco
+    Es neceario convertir los shapefile de nahuel usando
+    ogr2ogr -t_srs EPSG:4326 newshape.shp oldshape.shp
+    https://gis.stackexchange.com/questions/231734/unable-to-load-a-shapefile-with-basemap
+
 PENDIENTES: transformar la informacion en un xarray para manejarla mejor
-            Incorporar la escala cuando se grafica la pp
-            Agregar límites de departamentos (tenemos shapefile??)            
+                                 
 Created on Tue May 29 10:11:05 2018
 
 @author: marisol
 """
 ruta_IDs = '/home/marisol/Dropbox/investigacion/chaco/mapas_pluviometros_chaco/IDs/'
+ruta_shapefiles = '/home/marisol/mapas/'
+shapefile_chaco = ruta_shapefiles + 'Shapes_Chaco/'
+shapefile_bermejo = ruta_shapefiles + 'Shapes_Bermejo/'
+
 sheets_name = ['2017', '2018']
 
 from apiclient.discovery import build
@@ -26,7 +34,6 @@ from os.path import isfile, join
 import numpy as np
 import matplotlib.pyplot as plt
 import mpl_toolkits.basemap as bm
-
 
 #genero diccionario con nombre de estaciones y el ID de google spreadsheet
 estaciones = []
@@ -80,9 +87,9 @@ for i in dicts_from_file:
 
 indices = [i['ID']-1 for j in estaciones for i in estaciones2  if j['Nombre'] in i['Nombre']]
 #selecciono las fechas que eligio fede para caracterirzar eventos.
-#Evento 1: 1-3 noviembre 2017
+#Evento 1: 17-23 enero 2018
 
-lluvia_evento1 = np.nansum(lluvia[:,0,0:3,10], axis = 1)
+lluvia_evento1 = np.nansum(lluvia[:,1,16:23,0], axis = 1)
 
 lluvia_evento1_2d =np.empty((lluvia_evento1.shape[0],lluvia_evento1.shape[0]))
 lluvia_evento1_2d.fill(np.nan)
@@ -93,21 +100,42 @@ np.fill_diagonal(lluvia_evento1_2d, lluvia_evento1)
 
 fig1 = plt.figure(figsize=(16,20),dpi=300)  #fig size in inches\
 ax = fig1.add_axes([0.1,0.1,0.8,0.8])
+# Reading shape file
+sf_rio_paraguay = shapefile_chaco + 'Rio_Paraguay'
+sf_cuencas_chaco = shapefile_chaco + 'Cuencas_Chaco'
+sf_munis_bermejo = shapefile_bermejo + 'Munis_Bermejo'
+sf_loc_bermejo = shapefile_bermejo + 'LocalidadesBermejoconDatos'
+sf_munis_chaco = shapefile_bermejo + 'Municipios_Chaco'#
+#
+
 mapproj = bm.Basemap(projection='merc',
-                     llcrnrlat=-27.3, llcrnrlon=301.0,
-                     urcrnrlat=-26.7, urcrnrlon=301.5,resolution = 'i')    #projection and map limits
+                     llcrnrlat=-27.3, llcrnrlon=301.0-360,
+                     urcrnrlat=-26.7, urcrnrlon=-58.5,resolution = 'i')    #projection and map limits
     
-mapproj.drawcoastlines()          # coast
-mapproj.drawcountries()          # ccountries
 mapproj.drawstates()          
-mapproj.drawparallels(np.array([-60, -45, -30,-15,0]), labels=[1,0,0,0])    #draw parallels
-mapproj.drawmeridians(np.array([280, 300, 320]), labels=[0,0,0,1])     #draw meridians\
 lonproj, latproj = mapproj(np.array([estaciones2[i]['Coordenadas'][0] for i 
-                                     in indices])+360, np.array([estaciones2[i]
-                                     ['Coordenadas'][1] for i in indices]))      #poject grid
-CS1 = mapproj.scatter(lonproj, latproj,s = lluvia_evento1/(np.max(lluvia_evento1)-7)*1000*4) 
+                                     in indices]), np.array([estaciones2[i]
+                                     ['Coordenadas'][1] for i in indices]))      #poject points
+#local departments and rivers
+mapproj.readshapefile(sf_cuencas_chaco,'cuencas_chaco',linewidth=1.0,color = 'b')
+mapproj.readshapefile(sf_rio_paraguay,'Rio_Paraguay',linewidth=1.0,color = 'b')
+mapproj.readshapefile(sf_munis_bermejo,'Munis_Bermejo',linewidth=1.0,color = 'k')
+mapproj.readshapefile(sf_munis_chaco,'Munis_Chaco',linewidth=1.0,color = 'k')
+mapproj.readshapefile(sf_loc_bermejo,'Loc_Bermejo',linewidth=1.0,color = 'k')
+
+CS1 = mapproj.scatter(lonproj, latproj,s = lluvia_evento1/(np.max(lluvia_evento1)-7)*1000*4, c='C0') 
+#dibujo referencia
+x, y = mapproj(-58.95,-27.25)
+mapproj.scatter(x,y,s = 50/(np.max(lluvia_evento1)-7)*1000*4, c='C0')
+x, y = mapproj(-58.94,-27.25)
+plt.text(x,y,'50mm',Fontsize = 10, fontweight='bold')
+#write stations name
 for i in range(len(lonproj)):
-    plt.text(lonproj[i],latproj[i],estaciones2[indices[i]]['Nombre'],Fontsize = 14)
-ax.set_title('Lluvia 1-3 Noviembre 2017', Fontsize = 14)
+    plt.text(lonproj[i],latproj[i],estaciones2[indices[i]]['Nombre'],Fontsize = 12, fontweight='bold')
+x, y = mapproj(-58.72,-27.03)
+#write city of reference
+plt.text(x,y,'+ La Leonesa- Las Palmas', color='r', Fontsize = 12, fontweight='bold')
+
+ax.set_title('Lluvia 17-23 Enero 2018', Fontsize = 14, fontweight='bold')
 #save figure
-fig1.savefig('pp_evento1.jpg',dpi=300,bbox_inches='tight',orientation='landscape',papertype='A4')
+fig1.savefig('pp_evento1.jpg', bbox_inches='tight', orientation='landscape', papertype='A4')
